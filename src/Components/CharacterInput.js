@@ -19,7 +19,7 @@ function CharacterInput() {
     const [eyeColor, setEyeColor] = useState("")
     const [skinColor, setSkinColor] = useState("")
     const [hairColor, setHairColor] = useState("")
-    // Index associated with that spcies in the API data
+    // Index associated with that spcies in the data state
     const [speciesIndex, setSpeciesIndex] = useState(0)
 
     const handleSubmit = (e) => {
