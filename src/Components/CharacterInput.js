@@ -5,8 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {apiStates, useApi} from "./Hooks/useApi";
 import AttributeList from "./AttributeList";
 import TextInput from "./TextInput";
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import {Container, Row, Col, Form, Button} from 'react-bootstrap'
 import "../index.css"
 
 function CharacterInput() {
@@ -55,58 +54,78 @@ function CharacterInput() {
         case apiStates.SUCCESS:
             return (
             <div id="character-sheet">
-                <Form id="character-form" onSubmit={handleSubmit}>
-                    <Form.Row>
-                        <TextInput 
-                            text="First Name"
-                            name="firstName"
-                            value={firstName}
-                            onChange={e => setFirstName(e.target.value)}
-                        />
-                        <TextInput 
-                            text="Last Name"
-                            name="lastName"
-                            value={lastName}
-                            onChange={e => setLastName(e.target.value)}
-                        />
-                    </Form.Row>
-                    <Form.Row>
-                        <AttributeList
-                            name={"Species"}
-                            value={speciesIndex}
-                            onChange={e => setSpeciesIndex(parseInt(e.currentTarget.value))}
-                            list={data.map(d => d.name)} 
-                        />
-                        <AttributeList 
-                            name={"Eye Color"}
-                            value={eyeColor}
-                            text="Eye Colors"
-                            onChange={e => setEyeColor(e.currentTarget.value)}
-                            list={species && (species.eye_colors).split(",")}
-                        />
-                        <AttributeList
-                            name={"Skin Color"}
-                            value={skinColor}
-                            text="Skin Colors"
-                            onChange={e => setSkinColor(e.currentTarget.value)}
-                            list={species && (species.skin_colors).split(",")}
-                        />
-                        <AttributeList 
-                            name={"Hair Color"}
-                            value={hairColor}
-                            text="Hair Colors"
-                            onChange={e => setHairColor(e.currentTarget.value)}
-                            list={species && (species.hair_colors).split(",")}
-                        />
-                        </Form.Row>
-                        <Form.Row>
-                            <Button variant="primary" type="submit" onClick={handleSubmit}>Create</Button>
-                        </Form.Row>
+                <Container>
+                    <Form id="character-form" onSubmit={handleSubmit}>
+                        <Row xs={1} sm={2} md={3} lg={5}>
+                            <Col>
+                                <TextInput 
+                                    text="First Name"
+                                    name="firstName"
+                                    value={firstName}
+                                    onChange={e => setFirstName(e.target.value)}
+                                />
+                            </Col>
+                            <Col>
+                                <TextInput 
+                                    text="Last Name"
+                                    name="lastName"
+                                    value={lastName}
+                                    onChange={e => setLastName(e.target.value)}
+                                />
+                            </Col>
+                        </Row>
+                        <Row xs={1} sm={2} md={4} lg={6}>
+                            <Col>
+                                <AttributeList
+                                    name={"Species"}
+                                    value={speciesIndex}
+                                    onChange={e => setSpeciesIndex(parseInt(e.currentTarget.value))}
+                                    list={data.map(d => d.name)} 
+                                />
+                            </Col>
+                            <Col>
+                                <AttributeList 
+                                    name={"Eye Color"}
+                                    value={eyeColor}
+                                    text="Eye Colors"
+                                    onChange={e => setEyeColor(e.currentTarget.value)}
+                                    list={species && (species.eye_colors).split(",")}
+                                />
+                            </Col>
+                            <Col>
+                                <AttributeList
+                                    name={"Skin Color"}
+                                    value={skinColor}
+                                    text="Skin Colors"
+                                    onChange={e => setSkinColor(e.currentTarget.value)}
+                                    list={species && (species.skin_colors).split(",")}
+                                />
+                            </Col>
+                            <Col>
+                                <AttributeList 
+                                    name={"Hair Color"}
+                                    value={hairColor}
+                                    text="Hair Colors"
+                                    onChange={e => setHairColor(e.currentTarget.value)}
+                                    list={species && (species.hair_colors).split(",")}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Button variant="primary" type="submit" onClick={handleSubmit}>Create</Button>
+                            </Col>
+                        </Row>
                     </Form>
-                </div>
+                </Container>
+            </div>
             )
         default: 
-            return <h1>Loading...</h1>
+            return(
+                <Container>
+                    <h1>Loading...</h1>
+                </Container>
+            ) 
     }
 }
 
