@@ -1,19 +1,19 @@
 import React from "react"
+import Form from "react-bootstrap/Form"
 
 function TextInput(props) {
     return (
-        <div>
-            <label>
+        <Form.Group>
+            <Form.Label>
                 {props.text}
-            </label>
-            <br />
-            <input
-                type={"text"}
-                name={props.name}
+            </Form.Label>
+            <Form.Control 
+                type="text"
                 value={props.value}
                 onChange={props.onChange}
-            />
-        </div>
+            >
+            </Form.Control>
+        </Form.Group>
     )
 }
 
