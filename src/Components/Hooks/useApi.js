@@ -12,31 +12,30 @@ export const useApi = (url) => {
     const [data, setData] = useState([])
     const [state, setState] = useState(apiStates.LOADING)
     const [error, setError] = useState("")
-
-    useEffect( () => {
-        fetch(url)
-            .then((resp) => resp.json())
-            .then((result) => {
-                // Get the total number of items from the call
-                let count = result.count
-                // Loop through each page and get the result
-                for(var i = 1; i <= count; i++) {
-                    fetch(url + i) 
-                        .then( (resp) => resp.json() )
-                        .then( (result) => {
-                            setData(data => [...data, result])
-                        })
-                        .catch( () => {
-                            setState(apiStates.ERROR)
-                            setError("Generic Error")
-                        })
+    
+    useEffect(async () => { 
+        // This makes the initial call to see how many data points there are
+        let response = await fetch(url)
+        if(!response.ok) { 
+            setState(apiStates.ERROR)
+            setError("Could not fetch URL") 
+        } else {
+            let result = await response.json()
+            // Count is the number of data points returned from the call
+            const count = result.count
+            // This gets each data point individually and adds it to data
+            for(let i = 1; i <= count; i++) {
+                let response = await fetch(url + i)
+                if(!response.ok) {
+                    setState(apiStates.ERROR)
+                    setError("Could not fetch individual call")
+                } else {
+                    let result = await response.json()
+                    setData(data => [...data, result])
                 }
-                setState(apiStates.SUCCESS)
-            })
-            .catch(() => {
-                setState(apiStates.ERROR)
-                setError("Generic Error")
-            })
+            }
+        }
+        setState(apiStates.SUCCESS)
     }, [url])
 
     return [data, state, error]
